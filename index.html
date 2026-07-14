@@ -2846,7 +2846,7 @@ const WRAPPRD0_COLS = ['PRDCIA','PRDCOD','PRDLAR','PRDANC','PRDALT','PRDVOL','PR
 
 function numDec(val, dec) {
   const n = parseFloat(String(val||'').replace(',', '.'));
-  if (!n || isNaN(n)) return '';
+  if (!n || isNaN(n)) return undefined;
   return parseFloat(n.toFixed(dec));
 }
 
@@ -2862,16 +2862,16 @@ function construirFilaWrapprd0(d) {
   const alt = numDec(d['ALT_UNI'], 2);
   const pes = numDec(d['PES_UNI'], 2);
   const fe  = parseFloat(String(d['FE'] || '').replace(',', '.'));
-  const vol = (lar !== '' && anc !== '' && alt !== '') ? numDec(lar * anc * alt, 3) : '';
+  const vol = (lar !== undefined && anc !== undefined && alt !== undefined) ? numDec(lar * anc * alt, 3) : undefined;
   return {
     PRDCIA: xiven2 ? parseInt(xiven2, 10) : '',
     PRDCOD: (prefijo || '') + codigo,
     PRDLAR: lar, PRDANC: anc, PRDALT: alt, PRDVOL: vol, PRDPES: pes,
-    PRDUEM: (fe && !isNaN(fe)) ? Math.round(fe) : '',
-    PRDMAT: '',
-    PRDE13: d['EAN13'] || '',
-    PRDE14: '', PRDDEN: '', STATUS: '', USRCRE: '', FECCRE: '', HORCRE: '',
-    USRMOD: '', FECMOD: '', HORMOD: ''
+    PRDUEM: (fe && !isNaN(fe)) ? Math.round(fe) : undefined,
+    PRDMAT: undefined,
+    PRDE13: d['EAN13'] || undefined,
+    PRDE14: undefined, PRDDEN: undefined, STATUS: undefined, USRCRE: undefined, FECCRE: undefined, HORCRE: undefined,
+    USRMOD: undefined, FECMOD: undefined, HORMOD: undefined
   };
 }
 
